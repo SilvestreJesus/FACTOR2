@@ -1,0 +1,22 @@
+# Backend
+.env
+/vendor/
+storage/logs/
+storage/framework/
+
+# Frontend
+node_modules/
+dist/
+
+# Database (NUNCA subir)
+postgres/
+postgres-data/
+postgres/postgres-data/
+
+# WhatsApp / sesiones (NUNCA subir)
+wa-free/
+.wwebjs_auth/
+
+# OS
+.DS_Store
+Thumbs.db
