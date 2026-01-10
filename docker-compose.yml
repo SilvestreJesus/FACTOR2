@@ -1,0 +1,50 @@
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_factor
+    environment:
+      POSTGRES_USER: factor_user
+      POSTGRES_PASSWORD: factor_pass
+      POSTGRES_DB: factor_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - factor_network
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend_factor
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: factor_db
+      DB_USERNAME: factor_user
+      DB_PASSWORD: factor_pass
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - factor_network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend_factor
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - factor_network
+
+networks:
+  factor_network:
+
+volumes:
+  postgres_data:
